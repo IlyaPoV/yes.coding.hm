@@ -181,6 +181,19 @@ aside {
     margin-top: 120px;
 }
 
+.none {
+    display: none;
+}
+
+.false {
+    background-color: red;
+}
+.truth {
+    background-color: green;
+}
+
+/* items list  descriotion*/
+
 .end {
     background-image:url(../img/end.png);
 }
@@ -193,13 +206,6 @@ aside {
 .do {
     background-image:url(../img/do.png);
 }
-.none {
-    display: none;
-}
-
-.false {
-    background-color: red;
-}
-.truth {
-    background-color: green;
+.fwd {
+    background-image:url(../img/fwd.png);
 }

@@ -55,7 +55,6 @@ itemList.forEach((el)=>{
     })
 })
 
-
 document.addEventListener('drop', (e)=>{
     e.preventDefault()
     elemList = document.querySelectorAll('.checher')
@@ -78,7 +77,6 @@ document.addEventListener('keydown',(e)=>{
         checking.forEach((elem)=>{
             resultArr.push(elem.getAttribute('data-info'))
         })
-
         let check = false;
         for(let i = 0; i<=truth.length-1; i++){
             check = truth[i]==resultArr[i]
