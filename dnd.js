@@ -8,7 +8,7 @@ let resultArr = []
 let truthStore = [["fwd","fwd","fwd","fwd","fwd","fwd","fwd","fwd"],[],
 ["rep", "25", "do", "rep1"]];
 let truth = truthStore[taskNum-1];
-
+itemList = Array.from(elemList);
 elemList.forEach(elem=> elem.setAttribute('draggable',true))
 
 const swaping = function(e){
@@ -46,12 +46,15 @@ house.addEventListener('dragover', (e)=>{
     e.preventDefault()
 })
 
-document.addEventListener('dragstart', (e)=>{
-    if(!e.target.getAttribute("draggable")){
-        e.preventDefault();
-    }
-    dragger = e.target
+itemList.forEach((el)=>{
+    el.addEventListener('dragstart', (e)=>{
+        if(!e.target.getAttribute("draggable")){
+            e.preventDefault();
+        }
+        dragger = e.target
+    })
 })
+
 
 document.addEventListener('drop', (e)=>{
     e.preventDefault()
@@ -63,7 +66,7 @@ document.addEventListener('drop', (e)=>{
     if(e.target == house || e.target.parentNode == house && e.target != dragger){
         e.preventDefault()
         elemList = document.querySelectorAll('.checher')
-        resultArr.splice(resultArr.indexOf(dragger.getAttribute('data-test')),1)
+        resultArr.splice(resultArr.indexOf(dragger.getAttribute('data-info')),1)
         house.appendChild(dragger)
         swaping(e)
     }})
@@ -73,7 +76,7 @@ document.addEventListener('keydown',(e)=>{
         let checking = parent.querySelectorAll('.checher');
         resultArr.splice(0, resultArr.length)
         checking.forEach((elem)=>{
-            resultArr.push(elem.getAttribute('data-test'))
+            resultArr.push(elem.getAttribute('data-info'))
         })
 
         let check = false;

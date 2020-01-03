@@ -20,6 +20,7 @@ body {
 }
 
 
+
 .main-headline,
 .secont-headline {
     font-family: "Neucha", Helvetica, sans-serif;
@@ -61,6 +62,8 @@ body {
     width: 30px;
     background-color: rgb(28, 171, 238);
     margin: 5px;  
+    background-size: cover;
+    background-position: top;
 }
 .hint {
     width: 270px;
@@ -72,8 +75,7 @@ body {
 .hint__wide{
     width: 500px;
 }
-ul {
-    list-style: none;
+.challenge-area {
     margin: 0;
     padding: 0;
     display: flex;
@@ -125,6 +127,7 @@ aside {
 }
 
 .aside__nav {
+    list-style: none;
     margin: 0;
     padding: 0;
     margin-top: 65px;
@@ -144,8 +147,8 @@ aside {
 .aside__nav li::before {
     content: "";
     position: absolute;
-    left: -11px;
-    top: 6px;
+    left: 45px;
+    top: 8px;
     width: 8px;
     height: 3px;
     background-color: #20409a;
@@ -178,6 +181,18 @@ aside {
     margin-top: 120px;
 }
 
+.end {
+    background-image:url(../img/end.png);
+}
+.number {
+    background-image:url(../img/number.png);
+}
+.rep {
+    background-image:url(../img/rep.png);
+}
+.do {
+    background-image:url(../img/do.png);
+}
 .none {
     display: none;
 }
