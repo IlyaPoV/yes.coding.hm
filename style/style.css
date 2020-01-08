@@ -144,7 +144,7 @@ aside {
     position: relative;
 }
 
-.aside__nav li::before {
+/* .aside__nav li::before {
     content: "";
     position: absolute;
     left: 45px;
@@ -153,7 +153,7 @@ aside {
     height: 3px;
     background-color: #20409a;
     border-radius: 70%;
-}
+} */
 
 .aside__nav a {
     text-decoration: none;
@@ -190,6 +190,12 @@ aside {
 }
 .truth {
     background-color: green;
+}
+
+canvas {
+    margin-top: 200px;
+    width: 400px;
+    height: 400px;
 }
 
 /* items list  descriotion*/
