@@ -2,14 +2,28 @@
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext('2d');
     const curentEx = (+document.querySelector('.container').getAttribute('data-task'))-1;
+    let review = false;
+    //imgs
+    const leaves = document.querySelector('#leaves');
+    const golang = document.querySelector('#golang');
+
     let itemNow;
     let runStack;
-    const startCoord = [{
-        turtleStartX: 190,
-        turtleStartY: 337,
-        targetStartX: 185.5,
-        targetStartY: 82.5
-    }]
+
+    const startCoord = [
+        {
+            turtleStartX: 188,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5
+        },
+        {
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5
+        }
+    ]
 
     canvas.width =400;
     canvas.height= 400;
@@ -25,8 +39,7 @@
         posX: startCoord[curentEx].turtleStartX,
         posY: startCoord[curentEx].turtleStartY,
         drowing: ()=>{
-            ctx.fillStyle = "#b3d43f"
-            ctx.fillRect(turtle.posX, turtle.posY, 40,40);
+            ctx.drawImage(golang, turtle.posX, turtle.posY, 45,45)
         },
         clearPos: ()=>{
             turtle.posX=startCoord[curentEx].turtleStartX;
@@ -41,8 +54,11 @@
                 itemNow++
                 if(cb){
                     cb(runStack[itemNow])
+                }else{
+                    review = turtle.posX == 188 && turtle.posY == 85;
+                    reviewCheck()
                 }
-            }, 500)             
+            }, 300)             
         },
         moveRight:  (cb)=>{
             setTimeout(()=>{
@@ -52,8 +68,11 @@
                 itemNow++
                 if(cb){
                     cb(runStack[itemNow])
+                }else{
+                    review = turtle.posX == 188 && turtle.posY == 85;
+                    reviewCheck()
                 }
-            }, 500) 
+            }, 300) 
         },
         moveLeft: (cb)=>{
             setTimeout(()=>{
@@ -63,8 +82,11 @@
                 itemNow++
                 if(cb){
                     cb(runStack[itemNow])
+                }else{
+                    review = turtle.posX == 188 && turtle.posY == 85;
+                    reviewCheck()
                 }
-            }, 500)  
+            }, 300)  
         },
         moveDown: (cb)=>{
             setTimeout(()=>{
@@ -74,8 +96,11 @@
                 itemNow++
                 if(cb){
                     cb(runStack[itemNow])
+                }else{
+                    review = turtle.posX == 188 && turtle.posY == 85;
+                    reviewCheck()
                 }
-            }, 500)   
+            }, 300)   
         }
         
     }
@@ -96,13 +121,29 @@
             runStack=[];
             itemNow=1;
             resultArr.forEach((elem)=>{
-                if(elem = 'fwd'){
+                if(elem == 'fwd'){
                     runStack.push(turtle.moveUp)
                 }
+                else if(elem == 'right'){
+                    runStack.push(turtle.moveRight)
+                }
                 //desription for all actions
-            })           
-            runStack[0](runStack[1])       
+            })      
+            runStack[0](runStack[1])      
     }})
+
+    function reviewCheck(){
+        if(review){
+            parent.classList.remove('false')
+            parent.classList.add('truth')
+            nextEx.classList.remove('none');
+            let nexTask = taskNum+1;
+            nextEx.setAttribute('href', `${nexTask}.html`)
+        }else{
+            parent.classList.remove('truth')
+            parent.classList.add('false')
+        } 
+    }
 
     function clear(){
         ctx.lineWidth = 7;
@@ -111,14 +152,11 @@
         ctx.strokeStyle ="#262626"
         ctx.strokeRect(32.5, 32.5, 346, 346);
         placeDrowing();
-        
         turtle.clearPos();
-    
     }
     
     function placeDrowing(){
-        ctx.fillStyle = "#228B22";
-        ctx.fillRect(34.5, 34.5, 342, 342);
+        ctx.drawImage(leaves, 34.5, 34.5, 342, 342);
         gridDrowing();
         ctx.lineWidth = 5;
         ctx.strokeStyle = "#DB7093";
@@ -138,5 +176,5 @@
         ctx.lineWidth=3;
         ctx.strokeStyle = "#888";
         ctx.stroke();
-    } 
+    }
 }())
