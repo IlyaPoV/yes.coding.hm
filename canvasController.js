@@ -1,8 +1,15 @@
 (function(){
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext('2d');
-    let turtlePosX;
-    let turtlePosY;
+    const curentEx = (+document.querySelector('.container').getAttribute('data-task'))-1;
+    let itemNow;
+    let runStack;
+    const startCoord = [{
+        turtleStartX: 190,
+        turtleStartY: 337,
+        targetStartX: 185.5,
+        targetStartY: 82.5
+    }]
 
     canvas.width =400;
     canvas.height= 400;
@@ -11,7 +18,68 @@
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
-      
+ 
+    
+
+    let turtle={
+        posX: startCoord[curentEx].turtleStartX,
+        posY: startCoord[curentEx].turtleStartY,
+        drowing: ()=>{
+            ctx.fillStyle = "#b3d43f"
+            ctx.fillRect(turtle.posX, turtle.posY, 40,40);
+        },
+        clearPos: ()=>{
+            turtle.posX=startCoord[curentEx].turtleStartX;
+            turtle.posY=startCoord[curentEx].turtleStartY;
+            turtle.drowing()
+        },
+        moveUp: (cb)=>{
+            setTimeout(()=>{
+                placeDrowing()
+                turtle.posY-=50;
+                turtle.drowing();
+                itemNow++
+                if(cb){
+                    cb(runStack[itemNow])
+                }
+            }, 500)             
+        },
+        moveRight:  (cb)=>{
+            setTimeout(()=>{
+                placeDrowing()
+                turtle.posX+=50;
+                turtle.drowing();
+                itemNow++
+                if(cb){
+                    cb(runStack[itemNow])
+                }
+            }, 500) 
+        },
+        moveLeft: (cb)=>{
+            setTimeout(()=>{
+                placeDrowing()
+                turtle.posX-=50;
+                turtle.drowing();
+                itemNow++
+                if(cb){
+                    cb(runStack[itemNow])
+                }
+            }, 500)  
+        },
+        moveDown: (cb)=>{
+            setTimeout(()=>{
+                placeDrowing()
+                turtle.posY+=50;
+                turtle.drowing();
+                itemNow++
+                if(cb){
+                    cb(runStack[itemNow])
+                }
+            }, 500)   
+        }
+        
+    }
+
     clear();
 
     document.addEventListener('keydown',(e)=>{
@@ -25,14 +93,15 @@
             })
             count = resultArr.length;
             clear();
-            let stepsUp=0;
+            runStack=[];
+            itemNow=1;
             resultArr.forEach((elem)=>{
                 if(elem = 'fwd'){
-                    stepsUp++;
+                    runStack.push(turtle.moveUp)
                 }
-            })
-            turtle.moveUp(stepsUp);
-            
+                //desription for all actions
+            })           
+            runStack[0](runStack[1])       
     }})
 
     function clear(){
@@ -42,36 +111,32 @@
         ctx.strokeStyle ="#262626"
         ctx.strokeRect(32.5, 32.5, 346, 346);
         placeDrowing();
-    
-        turtlePosX = 165;
-        turtlePosY = 300;
-        ctx.fillStyle = "#b3d43f"
-        ctx.fillRect(turtlePosX, turtlePosY, 50,50);
+        
+        turtle.clearPos();
     
     }
     
     function placeDrowing(){
         ctx.fillStyle = "#228B22";
         ctx.fillRect(34.5, 34.5, 342, 342);
+        gridDrowing();
         ctx.lineWidth = 5;
         ctx.strokeStyle = "#DB7093";
-        ctx.strokeRect(165.5,100.5, 50,50);
+        ctx.strokeRect(startCoord[curentEx].targetStartX,startCoord[curentEx].targetStartY, 50,50);
     }   
 
-let turtle={
-    moveUp: (times)=>{
-        let iters=0;
-        setInterval(()=>{
-            iters++;
-            if(times < iters){
-                clearInterval(this);
-                return;
-            }
-            placeDrowing()
-            turtlePosY-=25;
-            ctx.fillStyle = "#b3d43f";
-            ctx.fillRect(turtlePosX, turtlePosY, 50,50);},100)      
-    }
-}
+    function gridDrowing(){
+        for(let x=85; x<375; x+=50){
+            ctx.moveTo(x,34.5);
+            ctx.lineTo(x,376.7);
+        }
 
+        for(let y=82.5;y<375; y+=50){
+            ctx.moveTo(34.5,y);
+            ctx.lineTo(376.7,y);
+        }
+        ctx.lineWidth=3;
+        ctx.strokeStyle = "#888";
+        ctx.stroke();
+    } 
 }())

@@ -5,7 +5,7 @@ let taskNum = +document.querySelector('.container').getAttribute('data-task')
 let nextEx = document.querySelector('.next-ex');
 let dragger;
 let resultArr = []
-let truthStore = [["fwd","fwd","fwd","fwd","fwd","fwd","fwd","fwd"],[],
+let truthStore = [["fwd","fwd","fwd","fwd","fwd"],[],
 ["rep", "25", "do", "rep1"]];
 let truth = truthStore[taskNum-1];
 itemList = Array.from(elemList);
@@ -78,10 +78,12 @@ document.addEventListener('keydown',(e)=>{
             resultArr.push(elem.getAttribute('data-info'))
         })
         let check = false;
-        for(let i = 0; i<=truth.length-1; i++){
-            check = truth[i]==resultArr[i]
-            if(!check){
-                break
+        if(truth.length == resultArr.length){
+            for(let i = 0; i<=truth.length-1; i++){
+                check = truth[i]==resultArr[i]
+                if(!check){
+                    break
+                }
             }
         }
 
