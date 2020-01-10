@@ -101,12 +101,51 @@
                     reviewCheck()
                 }
             }, 300)   
+        },
+        rep: (number)=>{
+            number = loopTimes
+            let loopStack = [];
+            loopItem = 0;
+            itemNow++;
+            if(itemLoopStart<itemLoopEnd){
+                for(let i =0; i<number;i++){
+                    for(let i = itemLoopStart; i<=itemLoopEnd; i++){
+                        loopStack.push(runStack[i])
+                        console.log(itemLoopStart)
+                    } 
+                } }
+            // loopStack.forEach((el,i)=>{
+            //     runStack.splice(itemLoopStart+i,0, el)
+            // })
+            console.log(itemLoopEnd)
+            console.log(itemLoopStart)
+            if(loopStack.length>0){
+                console.log(runStack[itemNow](runStack[itemNow+1]))
+                runStack[itemNow+1](runStack[itemNow+2]);
+            }
         }
-        
     }
 
-    clear();
+    function repHandler(state) {
+        let sintaxArr =["rep","number","do","end"]
+        let inState = -0.1;
+        let allRight = true;
+        sintaxArr.forEach((el)=>{
+            inState < state.indexOf(el) ? inState = state.indexOf(el) :  allRight = false;
+            inState = state.indexOf(el)
+            if(inState ==-1){
+                return false;
+            }
+        })
+        return allRight;
+    }
 
+    
+
+    clear();
+    let itemLoopStart;
+    let itemLoopEnd;
+    let loopTimes;
     document.addEventListener('keydown',(e)=>{
         if(e.keyCode == 13){
             let parent = document.querySelector("#parent");
@@ -120,15 +159,30 @@
             clear();
             runStack=[];
             itemNow=1;
-            resultArr.forEach((elem)=>{
+            itemLoopEnd = resultArr.indexOf('end') - resultArr.indexOf('rep')
+            con
+            resultArr.forEach((elem,i)=>{
                 if(elem == 'fwd'){
                     runStack.push(turtle.moveUp)
                 }
                 else if(elem == 'right'){
                     runStack.push(turtle.moveRight)
+                }else if(elem == 'rep'){
+                  if(repHandler(resultArr)){
+                    itemLoopStart = i+1;
+                    runStack.push(turtle.rep)
+                  }else{
+                    throw new Error("Error in Repeat Loop")
+                  }
+                }else if(elem == 'end'){
+                    console.log(runStack)
+                    itemLoopEnd = runStack.length-1
+                }else if(elem == 'number'){
+                    loopTimes = 3;
                 }
                 //desription for all actions
-            })      
+            })
+    
             runStack[0](runStack[1])      
     }})
 
