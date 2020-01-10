@@ -5,8 +5,8 @@ let taskNum = +document.querySelector('.container').getAttribute('data-task')
 let nextEx = document.querySelector('.next-ex');
 let dragger;
 let resultArr = []
-let truthStore = [["fwd","fwd","fwd","fwd","fwd"],[],
-["rep", "25", "do", "rep1"]];
+let truthStore = [["fwd","fwd","fwd","fwd","fwd"],[/* 2*/],
+["rep", "25", "do", "rep1"],[/* 4*/],[/* 5*/],[/* 6*/],[/* 7*/],["rep", "25", "do", "rep1"]];
 let truth = truthStore[taskNum-1];
 itemList = Array.from(elemList);
 elemList.forEach(elem=> elem.setAttribute('draggable',true))
@@ -92,7 +92,8 @@ document.addEventListener('keydown',(e)=>{
             parent.classList.add('truth')
             nextEx.classList.remove('none');
             let nexTask = taskNum+1;
-            nextEx.setAttribute('href', `${nexTask}.html`)
+            if(nexTask<9){
+                nextEx.setAttribute('href', `${nexTask}.html`)}
         }else{
             parent.classList.remove('truth')
             parent.classList.add('false')

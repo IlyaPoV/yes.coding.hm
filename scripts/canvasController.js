@@ -15,13 +15,17 @@
             turtleStartX: 188,
             turtleStartY: 335,
             targetStartX: 185.5,
-            targetStartY: 82.5
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85
         },
         {
             turtleStartX: 88,
             turtleStartY: 335,
             targetStartX: 185.5,
-            targetStartY: 82.5
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
         }
     ]
 
@@ -55,7 +59,6 @@
                 if(cb){
                     cb(runStack[itemNow])
                 }else{
-                    review = turtle.posX == 188 && turtle.posY == 85;
                     reviewCheck()
                 }
             }, 300)             
@@ -69,7 +72,6 @@
                 if(cb){
                     cb(runStack[itemNow])
                 }else{
-                    review = turtle.posX == 188 && turtle.posY == 85;
                     reviewCheck()
                 }
             }, 300) 
@@ -83,7 +85,6 @@
                 if(cb){
                     cb(runStack[itemNow])
                 }else{
-                    review = turtle.posX == 188 && turtle.posY == 85;
                     reviewCheck()
                 }
             }, 300)  
@@ -97,7 +98,6 @@
                 if(cb){
                     cb(runStack[itemNow])
                 }else{
-                    review = turtle.posX == 188 && turtle.posY == 85;
                     reviewCheck()
                 }
             }, 300)   
@@ -133,6 +133,7 @@
     }})
 
     function reviewCheck(){
+        review = turtle.posX == startCoord[curentEx].finishAtX && turtle.posY == startCoord[curentEx].finishAtY;
         if(review){
             parent.classList.remove('false')
             parent.classList.add('truth')
