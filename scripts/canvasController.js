@@ -7,11 +7,10 @@
     const leaves = document.querySelector('#leaves');
     const golang = document.querySelector('#golang');
 
-    let itemNow;
     let runStack;
 
     const startCoord = [
-        {
+        {//1
             turtleStartX: 188,
             turtleStartY: 335,
             targetStartX: 185.5,
@@ -19,7 +18,55 @@
             finishAtX: 188,
             finishAtY: 85
         },
-        {
+        {//2
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
+        },
+        {//3
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
+        },
+        {//4
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 335.5,
+            targetStartY: 82.5,
+            finishAtX: 338,
+            finishAtY: 85,
+        },
+        {//5
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
+        },
+        {//6
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
+        },
+        {//7
+            turtleStartX: 88,
+            turtleStartY: 335,
+            targetStartX: 185.5,
+            targetStartY: 82.5,
+            finishAtX: 188,
+            finishAtY: 85,
+        },
+        {//8
             turtleStartX: 88,
             turtleStartY: 335,
             targetStartX: 185.5,
@@ -50,97 +97,65 @@
             turtle.posY=startCoord[curentEx].turtleStartY;
             turtle.drowing()
         },
-        moveUp: (cb)=>{
+        moveUp: ()=>{
+            return new Promise(resolve =>{
             setTimeout(()=>{
                 placeDrowing()
                 turtle.posY-=50;
                 turtle.drowing();
                 itemNow++
-                if(cb){
-                    cb(runStack[itemNow])
-                }else{
-                    reviewCheck()
-                }
+                resolve()
             }, 300)             
-        },
-        moveRight:  (cb)=>{
-            setTimeout(()=>{
-                placeDrowing()
-                turtle.posX+=50;
-                turtle.drowing();
-                itemNow++
-                if(cb){
-                    cb(runStack[itemNow])
-                }else{
-                    reviewCheck()
-                }
-            }, 300) 
+        })},
+        moveRight:  ()=>{
+            return new Promise(resolve =>{
+                setTimeout(()=>{
+                    placeDrowing()
+                    turtle.posX+=50;
+                    turtle.drowing();
+                    itemNow++
+                    resolve()
+                }, 300) 
+            })
         },
         moveLeft: (cb)=>{
-            setTimeout(()=>{
-                placeDrowing()
-                turtle.posX-=50;
-                turtle.drowing();
-                itemNow++
-                if(cb){
-                    cb(runStack[itemNow])
-                }else{
-                    reviewCheck()
-                }
-            }, 300)  
+            return new Promise(resolve =>{
+                setTimeout(()=>{
+                    placeDrowing()
+                    turtle.posX-=50;
+                    turtle.drowing();
+                    itemNow++
+                    resolve()
+                }, 300)
+            })  
         },
-        moveDown: (cb)=>{
-            setTimeout(()=>{
-                placeDrowing()
-                turtle.posY+=50;
-                turtle.drowing();
-                itemNow++
-                if(cb){
-                    cb(runStack[itemNow])
-                }else{
-                    reviewCheck()
-                }
-            }, 300)   
-        },
-        rep: (number)=>{
-            number = loopTimes
-            let loopStack = [];
-            loopItem = 0;
-            itemNow++;
-            if(itemLoopStart<itemLoopEnd){
-                for(let i =0; i<number;i++){
-                    for(let i = itemLoopStart; i<=itemLoopEnd; i++){
-                        loopStack.push(runStack[i])
-                        console.log(itemLoopStart)
-                    } 
-                } }
-            // loopStack.forEach((el,i)=>{
-            //     runStack.splice(itemLoopStart+i,0, el)
-            // })
-            console.log(itemLoopEnd)
-            console.log(itemLoopStart)
-            if(loopStack.length>0){
-                console.log(runStack[itemNow](runStack[itemNow+1]))
-                runStack[itemNow+1](runStack[itemNow+2]);
-            }
+        moveDown: ()=>{
+            return new Promise(resolve =>{
+                setTimeout(()=>{
+                    placeDrowing()
+                    turtle.posY+=50;
+                    turtle.drowing();
+                    itemNow++
+                    resolve();
+                }, 300)
+            })   
         }
     }
+    
 
     function repHandler(state) {
-        let sintaxArr =["rep","number","do","end"]
+        let sintaxArr =["rep","do","end"]
         let inState = -0.1;
         let allRight = true;
         sintaxArr.forEach((el)=>{
             inState < state.indexOf(el) ? inState = state.indexOf(el) :  allRight = false;
             inState = state.indexOf(el)
-            if(inState ==-1){
+            if(inState ==-1||!allRight){
                 return false;
             }
         })
         return allRight;
     }
-
-    
 
     clear();
     let itemLoopStart;
@@ -159,31 +174,52 @@
             clear();
             runStack=[];
             itemNow=1;
-            itemLoopEnd = resultArr.indexOf('end') - resultArr.indexOf('rep')
-            con
+            itemLoopEnd = resultArr.indexOf('end') - resultArr.indexOf('rep') - 3;
+            
+            let loopStack = [];
+            let loopTimes1;
+            let countOfRepl;
+            
+            
+            while(resultArr.indexOf("rep")>=0){
+                if(repHandler(resultArr)){
+                    itemLoopStart = resultArr.indexOf("rep");
+                    itemLoopEnd = resultArr.indexOf("end");
+                    loopTimes1 = parseInt(resultArr[itemLoopStart+1])
+                    countOfRepl=itemLoopEnd-itemLoopStart;
+
+                    for(let i = 0; i<loopTimes1;i++){
+                        for(let i = itemLoopStart+2; i<itemLoopEnd-1; i++){
+                            loopStack.push(resultArr[i+1]) 
+                        } 
+                    } 
+
+                    resultArr.splice(itemLoopStart,countOfRepl+1)
+                    loopStack.forEach((el,i)=>{
+                    resultArr.splice(itemLoopStart+i,0,el)
+                    })
+                }else{
+                    throw new Error("Ошибка в синтаксисе цикла");
+                }
+            }
+
             resultArr.forEach((elem,i)=>{
                 if(elem == 'fwd'){
                     runStack.push(turtle.moveUp)
                 }
                 else if(elem == 'right'){
                     runStack.push(turtle.moveRight)
-                }else if(elem == 'rep'){
-                  if(repHandler(resultArr)){
-                    itemLoopStart = i+1;
-                    runStack.push(turtle.rep)
-                  }else{
-                    throw new Error("Error in Repeat Loop")
-                  }
-                }else if(elem == 'end'){
-                    console.log(runStack)
-                    itemLoopEnd = runStack.length-1
-                }else if(elem == 'number'){
-                    loopTimes = 3;
                 }
                 //desription for all actions
             })
     
-            runStack[0](runStack[1])      
+            async function run(){
+                for(let elem of runStack){
+                   await elem(); 
+                }
+            }
+            run().then(()=>reviewCheck());
+            
     }})
 
     function reviewCheck(){
@@ -201,16 +237,17 @@
     }
 
     function clear(){
-        ctx.lineWidth = 7;
-        ctx.strokeStyle ="#696969"
-        ctx.strokeRect(30.5, 30.5, 350, 350);
-        ctx.strokeStyle ="#262626"
-        ctx.strokeRect(32.5, 32.5, 346, 346);
         placeDrowing();
         turtle.clearPos();
     }
     
     function placeDrowing(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.lineWidth = 7;
+        ctx.strokeStyle ="#696969"
+        ctx.strokeRect(30.5, 30.5, 350, 350);
+        ctx.strokeStyle ="#262626"
+        ctx.strokeRect(32.5, 32.5, 346, 346);
         ctx.drawImage(leaves, 34.5, 34.5, 342, 342);
         gridDrowing();
         ctx.lineWidth = 5;
