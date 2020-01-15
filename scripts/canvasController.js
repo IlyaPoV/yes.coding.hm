@@ -269,4 +269,39 @@
         ctx.strokeStyle = "#888";
         ctx.stroke();
     }
+
+// test new loop
+
+    let textArr =['rep',"3","do",'rep','end','end','rep','end']
+    for(const i of textArr){
+
+        console.log(textArr.lastIndexOf('end',i))
+    }
+    
+    Array.prototype.howMuch = function(item){
+        let idx = this.indexOf(item);
+        let indices=[]
+        while (idx != -1) {
+            indices.push(idx);
+                idx = this.indexOf(item, idx + 1);
+            }
+        return indices.length
+    }
+
+    if(textArr.howMuch("rep")>1){
+        let firstRep = textArr.indexOf("rep")+1
+        let vlozh = textArr.indexOf("rep",firstRep)<textArr.indexOf("end",firstRep)    
+        if(vlozh){
+            let vlozhLvl = textArr.howMuch("rep");
+
+            let trueEnd = textArr.indexOf("end")+vlozhLvl-1;
+            let doubling = textArr.lastIndexOf()
+            trueEnd = textArr.indexOf("end",trueEnd);
+
+            console.log(trueEnd);
+        }
+    }
+    
+
+
 }())
