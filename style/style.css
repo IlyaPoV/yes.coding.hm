@@ -181,7 +181,7 @@ canvas {
     height: 400px;
 }
 img {
-    background-image: url(../img/_yes.svg);
+    background-image: url(../img/_yes.png);
     background-size: cover;
     background-repeat: no-repeat;
     display: block;
