@@ -202,7 +202,7 @@
     while(StuckBeforeRun.indexOf("rep")>=0){
         for(let idx = 0; idx<StuckBeforeRun.length; idx++){
             let el = StuckBeforeRun[idx];
-            if(el == 'fwd'){
+            if(el == 'fwd'|| el =='right' || el == 'left'|| el == 'dwn'){
                 middleStuck.push(el)
             }else if(el=="rep"){
                 if(!(repHandler(StuckBeforeRun))){
@@ -265,6 +265,12 @@
                 }
                 else if(elem == 'right'){
                     runStack.push(turtle.moveRight)
+                }
+                else if(elem == 'left'){
+                    runStack.push(turtle.moveLeft)
+                }
+                else if(elem == 'dwn'){
+                    runStack.push(turtle.moveDown)
                 }
                 //desription for all actions
             })
