@@ -241,6 +241,9 @@ function stuckToRun(firstArr){
             if(el == 'fwd'){
                 middleStuck.push(el)
             }else if(el=="rep"){
+                if(!(repHandler(StuckBeforeRun))){
+                    throw new Error("Ошибка в синтаксисе цикла")
+                }
                 let loopStuck = []
                 let loopStart = idx+3;
                 let loopTimes = parseInt(StuckBeforeRun[idx+1]);
