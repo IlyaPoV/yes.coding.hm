@@ -180,6 +180,14 @@ canvas {
     width: 400px;
     height: 400px;
 }
+img {
+    background-image: url(../img/_yes.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: block;
+    width: 150px;
+    height: 106px;
+}
 
 /* items list  descriotion*/
 
