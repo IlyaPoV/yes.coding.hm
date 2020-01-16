@@ -200,11 +200,11 @@
     function stuckToRun(firstArr){
     let StuckBeforeRun = firstArr;
     let middleStuck=[];
-        while(StuckBeforeRun.indexOf("rep")>=0){
+        while(StuckBeforeRun.indexOf("rep")>=0 || StuckBeforeRun.indexOf("do")>=0 || StuckBeforeRun.indexOf("end")>=0){
             for(let idx = 0; idx<StuckBeforeRun.length; idx++){
                 let el = StuckBeforeRun[idx];
                 if(el == 'end'|| el == 'do'){
-                    throw new Error("Ошибка в синтаксисе цикла")
+                    throw new Error("Ошибка в синтаксисе цикла");
                 }else if(el == 'fwd'|| el =='right' || el == 'left'|| el == 'dwn'){
                     middleStuck.push(el)
                 }else if(el=="rep"){
