@@ -146,18 +146,19 @@
             }
         })
         allRight = state.howMuch("rep") == state.howMuch("end") == state.howMuch("do")
-        let checker = ()=>{
-            let check
+        let expectNum = ()=>{
+            let check = true;
             state.forEach((el,i)=>{
                 if(el=="rep"){
                     if(!Boolean(parseInt(state[i+1]))){
-                        check = false;
+                        check =false
                     }
                 }
             })
             return check;
         }
-        allRight = checker()
+
+        allRight = expectNum()
         return allRight;
     }
     
