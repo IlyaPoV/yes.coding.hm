@@ -145,6 +145,7 @@
                 return false;
             }
         })
+        allRight = state.howMuch("rep") == state.howMuch("end");
         return allRight;
     }
     
@@ -247,6 +248,17 @@
     return StuckBeforeRun;
     }
 
+    Array.prototype.howMuch = function(item){
+        let idx = this.indexOf(item);
+        let indices=[]
+        while (idx != -1) {
+            indices.push(idx);
+                idx = this.indexOf(item, idx + 1);
+            }
+        return indices.length
+    }
+
+    // Run app
     clear();
     document.addEventListener('keydown',(e)=>{
         if(e.keyCode == 13){
@@ -284,5 +296,5 @@
             
     }})
 
-    
+
 }())
