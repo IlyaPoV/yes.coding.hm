@@ -189,6 +189,16 @@ img {
     height: 106px;
 }
 
+#leaves {
+    height: 0;
+    width: 0;
+}
+
+#golang {
+    height: 0;
+    width: 0;
+}
+
 /* items list  descriotion*/
 
 .end {
