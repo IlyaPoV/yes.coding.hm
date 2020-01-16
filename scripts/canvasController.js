@@ -7,8 +7,6 @@
     const leaves = document.querySelector('#leaves');
     const golang = document.querySelector('#golang');
 
-    let runStack;
-
     const startCoord = [
         {//1
             turtleStartX: 188,
@@ -103,7 +101,6 @@
                 placeDrowing()
                 turtle.posY-=50;
                 turtle.drowing();
-                itemNow++
                 resolve()
             }, 300)             
         })},
@@ -113,7 +110,6 @@
                     placeDrowing()
                     turtle.posX+=50;
                     turtle.drowing();
-                    itemNow++
                     resolve()
                 }, 300) 
             })
@@ -123,8 +119,7 @@
                 setTimeout(()=>{
                     placeDrowing()
                     turtle.posX-=50;
-                    turtle.drowing();
-                    itemNow++
+                    turtle.drowing();                 
                     resolve()
                 }, 300)
             })  
@@ -134,8 +129,7 @@
                 setTimeout(()=>{
                     placeDrowing()
                     turtle.posY+=50;
-                    turtle.drowing();
-                    itemNow++
+                    turtle.drowing();   
                     resolve();
                 }, 300)
             })   
@@ -158,52 +152,19 @@
     }
 
     clear();
-    let itemLoopStart;
-    let itemLoopEnd;
-    let loopTimes;
     document.addEventListener('keydown',(e)=>{
         if(e.keyCode == 13){
             let parent = document.querySelector("#parent");
             let resultArr = [];
+            let runStack=[];
             let checking = parent.querySelectorAll('.checher');
             resultArr.splice(0, resultArr.length)
             checking.forEach((elem)=>{
                 resultArr.push(elem.getAttribute('data-info'))
             })
-            count = resultArr.length;
             clear();
-            runStack=[];
-            itemNow=1;
-            itemLoopEnd = resultArr.indexOf('end') - resultArr.indexOf('rep') - 3;
-            
-            let loopStack = [];
-            let loopTimes1;
-            let countOfRepl;
-            
-            
-            while(resultArr.indexOf("rep")>=0){
-                if(repHandler(resultArr)){
-                    itemLoopStart = resultArr.indexOf("rep");
-                    itemLoopEnd = resultArr.indexOf("end");
-                    loopTimes1 = parseInt(resultArr[itemLoopStart+1])
-                    countOfRepl=itemLoopEnd-itemLoopStart;
-
-                    for(let i = 0; i<loopTimes1;i++){
-                        for(let i = itemLoopStart+2; i<itemLoopEnd-1; i++){
-                            loopStack.push(resultArr[i+1]) 
-                        } 
-                    } 
-
-                    resultArr.splice(itemLoopStart,countOfRepl+1)
-                    loopStack.forEach((el,i)=>{
-                    resultArr.splice(itemLoopStart+i,0,el)
-                    })
-                }else{
-                    throw new Error("Ошибка в синтаксисе цикла");
-                }
-            }
-
-            resultArr.forEach((elem,i)=>{
+            let arrStackToRun = stuckToRun(resultArr)
+            arrStackToRun.forEach((elem,i)=>{
                 if(elem == 'fwd'){
                     runStack.push(turtle.moveUp)
                 }
@@ -271,37 +232,51 @@
     }
 
 // test new loop
-
-    let textArr =['rep',"3","do",'rep','end','end','rep','end']
-    for(const i of textArr){
-
-        console.log(textArr.lastIndexOf('end',i))
-    }
-    
-    Array.prototype.howMuch = function(item){
-        let idx = this.indexOf(item);
-        let indices=[]
-        while (idx != -1) {
-            indices.push(idx);
-                idx = this.indexOf(item, idx + 1);
+function stuckToRun(firstArr){
+    let StuckBeforeRun = firstArr;
+    let middleStuck=[];
+    while(StuckBeforeRun.indexOf("rep")>=0){
+        for(let idx = 0; idx<StuckBeforeRun.length; idx++){
+            let el = StuckBeforeRun[idx];
+            if(el == 'fwd'){
+                middleStuck.push(el)
+            }else if(el=="rep"){
+                let loopStuck = []
+                let loopStart = idx+3;
+                let loopTimes = parseInt(StuckBeforeRun[idx+1]);
+                let endFind = 1;
+                let i = 0;
+                let elem;
+                let elemEnd;
+                while(endFind>0){
+                    elemEnd = loopStart+i
+                    elem = StuckBeforeRun[elemEnd];
+                    i++;
+                    if(elem == "rep"){
+                        endFind++;
+                    }
+                    if(elem == "end"){
+                        endFind--;
+                    }
+                    if(endFind>0||!(elem == "end")){
+                        loopStuck.push(elem);
+                    }
+                }
+                let endLoopStuck = [];
+                for(let i = 0; i < loopTimes;i++){
+                    endLoopStuck = endLoopStuck.concat(loopStuck);
+                }
+                let loopLenght= elemEnd-idx;
+                endLoopStuck.forEach(el=>{
+                    middleStuck.push(el);   
+                })
+                idx+=loopLenght;
             }
-        return indices.length
-    }
-
-    if(textArr.howMuch("rep")>1){
-        let firstRep = textArr.indexOf("rep")+1
-        let vlozh = textArr.indexOf("rep",firstRep)<textArr.indexOf("end",firstRep)    
-        if(vlozh){
-            let vlozhLvl = textArr.howMuch("rep");
-
-            let trueEnd = textArr.indexOf("end")+vlozhLvl-1;
-            let doubling = textArr.lastIndexOf()
-            trueEnd = textArr.indexOf("end",trueEnd);
-
-            console.log(trueEnd);
         }
+    StuckBeforeRun = middleStuck;
+    middleStuck = [];
+
     }
-    
-
-
+    return StuckBeforeRun;
+    }
 }())
