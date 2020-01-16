@@ -200,51 +200,53 @@
     function stuckToRun(firstArr){
     let StuckBeforeRun = firstArr;
     let middleStuck=[];
-    while(StuckBeforeRun.indexOf("rep")>=0){
-        for(let idx = 0; idx<StuckBeforeRun.length; idx++){
-            let el = StuckBeforeRun[idx];
-            if(el == 'fwd'|| el =='right' || el == 'left'|| el == 'dwn'){
-                middleStuck.push(el)
-            }else if(el=="rep"){
-                if(!(repHandler(StuckBeforeRun))){
+        while(StuckBeforeRun.indexOf("rep")>=0){
+            for(let idx = 0; idx<StuckBeforeRun.length; idx++){
+                let el = StuckBeforeRun[idx];
+                if(el == 'end'|| el == 'do'){
                     throw new Error("Ошибка в синтаксисе цикла")
-                }
-                let loopStuck = []
-                let loopStart = idx+3;
-                let loopTimes = parseInt(StuckBeforeRun[idx+1]);
-                let endFind = 1;
-                let i = 0;
-                let elem;
-                let elemEnd;
-                while(endFind>0){
-                    elemEnd = loopStart+i
-                    elem = StuckBeforeRun[elemEnd];
-                    i++;
-                    if(elem == "rep"){
-                        endFind++;
+                }else if(el == 'fwd'|| el =='right' || el == 'left'|| el == 'dwn'){
+                    middleStuck.push(el)
+                }else if(el=="rep"){
+                    if(!(repHandler(StuckBeforeRun))){
+                        throw new Error("Ошибка в синтаксисе цикла")
                     }
-                    if(elem == "end"){
-                        endFind--;
+                    let loopStuck = []
+                    let loopStart = idx+3;
+                    let loopTimes = parseInt(StuckBeforeRun[idx+1]);
+                    let endFind = 1;
+                    let i = 0;
+                    let elem;
+                    let elemEnd;
+                    while(endFind>0){
+                        elemEnd = loopStart+i
+                        elem = StuckBeforeRun[elemEnd];
+                        i++;
+                        if(elem == "rep"){
+                            endFind++;
+                        }
+                        if(elem == "end"){
+                            endFind--;
+                        }
+                        if(endFind>0||!(elem == "end")){
+                            loopStuck.push(elem);
+                        }
                     }
-                    if(endFind>0||!(elem == "end")){
-                        loopStuck.push(elem);
+                    let endLoopStuck = [];
+                    for(let i = 0; i < loopTimes;i++){
+                        endLoopStuck = endLoopStuck.concat(loopStuck);
                     }
+                    let loopLenght= elemEnd-idx;
+                    endLoopStuck.forEach(el=>{
+                        middleStuck.push(el);   
+                    })
+                    idx+=loopLenght;
                 }
-                let endLoopStuck = [];
-                for(let i = 0; i < loopTimes;i++){
-                    endLoopStuck = endLoopStuck.concat(loopStuck);
-                }
-                let loopLenght= elemEnd-idx;
-                endLoopStuck.forEach(el=>{
-                    middleStuck.push(el);   
-                })
-                idx+=loopLenght;
             }
-        }
-    StuckBeforeRun = middleStuck;
-    middleStuck = [];
+        StuckBeforeRun = middleStuck;
+        middleStuck = [];
 
-    }
+        }
     return StuckBeforeRun;
     }
 
