@@ -81,9 +81,7 @@
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.msImageSmoothingEnabled = false;
     ctx.webkitImageSmoothingEnabled = false;
- 
     
-
     let turtle={
         posX: startCoord[curentEx].turtleStartX,
         posY: startCoord[curentEx].turtleStartY,
@@ -135,7 +133,6 @@
             })   
         }
     }
-    
 
     function repHandler(state) {
         let sintaxArr =["rep","do","end"]
@@ -150,39 +147,7 @@
         })
         return allRight;
     }
-
-    clear();
-    document.addEventListener('keydown',(e)=>{
-        if(e.keyCode == 13){
-            let parent = document.querySelector("#parent");
-            let resultArr = [];
-            let runStack=[];
-            let checking = parent.querySelectorAll('.checher');
-            resultArr.splice(0, resultArr.length)
-            checking.forEach((elem)=>{
-                resultArr.push(elem.getAttribute('data-info'))
-            })
-            clear();
-            let arrStackToRun = stuckToRun(resultArr)
-            arrStackToRun.forEach((elem,i)=>{
-                if(elem == 'fwd'){
-                    runStack.push(turtle.moveUp)
-                }
-                else if(elem == 'right'){
-                    runStack.push(turtle.moveRight)
-                }
-                //desription for all actions
-            })
     
-            async function run(){
-                for(let elem of runStack){
-                   await elem(); 
-                }
-            }
-            run().then(()=>reviewCheck());
-            
-    }})
-
     function reviewCheck(){
         review = turtle.posX == startCoord[curentEx].finishAtX && turtle.posY == startCoord[curentEx].finishAtY;
         if(review){
@@ -231,8 +196,7 @@
         ctx.stroke();
     }
 
-// test new loop
-function stuckToRun(firstArr){
+    function stuckToRun(firstArr){
     let StuckBeforeRun = firstArr;
     let middleStuck=[];
     while(StuckBeforeRun.indexOf("rep")>=0){
@@ -282,4 +246,37 @@ function stuckToRun(firstArr){
     }
     return StuckBeforeRun;
     }
+
+    clear();
+    document.addEventListener('keydown',(e)=>{
+        if(e.keyCode == 13){
+            let parent = document.querySelector("#parent");
+            let resultArr = [];
+            let runStack=[];
+            let checking = parent.querySelectorAll('.checher');
+            checking.forEach((elem)=>{
+                resultArr.push(elem.getAttribute('data-info'))
+            })
+            clear();
+            let arrStackToRun = stuckToRun(resultArr)
+            arrStackToRun.forEach((elem,i)=>{
+                if(elem == 'fwd'){
+                    runStack.push(turtle.moveUp)
+                }
+                else if(elem == 'right'){
+                    runStack.push(turtle.moveRight)
+                }
+                //desription for all actions
+            })
+    
+            async function run(){
+                for(let elem of runStack){
+                   await elem(); 
+                }
+            }
+            run().then(()=>reviewCheck());
+            
+    }})
+
+    
 }())
