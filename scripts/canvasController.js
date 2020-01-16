@@ -145,7 +145,19 @@
                 return false;
             }
         })
-        allRight = state.howMuch("rep") == state.howMuch("end");
+        allRight = state.howMuch("rep") == state.howMuch("end") == state.howMuch("do")
+        let checker = ()=>{
+            let check
+            state.forEach((el,i)=>{
+                if(el=="rep"){
+                    if(!Boolean(parseInt(state[i+1]))){
+                        check = false;
+                    }
+                }
+            })
+            return check;
+        }
+        allRight = checker()
         return allRight;
     }
     
@@ -200,11 +212,13 @@
     function stuckToRun(firstArr){
     let StuckBeforeRun = firstArr;
     let middleStuck=[];
-        while(StuckBeforeRun.indexOf("rep")>=0 || StuckBeforeRun.indexOf("do")>=0 || StuckBeforeRun.indexOf("end")>=0){
+        while(checkNumber(StuckBeforeRun) ||StuckBeforeRun.indexOf("rep")>=0 || StuckBeforeRun.indexOf("do")>=0 || StuckBeforeRun.indexOf("end")>=0){
             for(let idx = 0; idx<StuckBeforeRun.length; idx++){
                 let el = StuckBeforeRun[idx];
                 if(el == 'end'|| el == 'do'){
                     throw new Error("Ошибка в синтаксисе цикла");
+                }else if(parseInt(el)){
+                    throw new Error("Цифра в пустом месте");
                 }else if(el == 'fwd'|| el =='right' || el == 'left'|| el == 'dwn'){
                     middleStuck.push(el)
                 }else if(el=="rep"){
@@ -259,6 +273,18 @@
             }
         return indices.length
     }
+
+    function checkNumber(arr){
+        let result = false
+        arr.forEach(el=>{
+            if(Boolean(parseInt(el))){
+                result = true;
+            }
+        })
+        return result;
+    }
+
+
 
     // Run app
     clear();
