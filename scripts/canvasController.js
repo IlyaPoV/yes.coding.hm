@@ -192,8 +192,8 @@
         ctx.drawImage(leaves, 34.5, 34.5, 347, 347);
         gridDrowing();
         ctx.lineWidth = 5;
-        ctx.strokeStyle = "#DB7093";
-        ctx.strokeRect(startCoord[curentEx].targetStartX,startCoord[curentEx].targetStartY, 48,48);
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(startCoord[curentEx].targetStartX+1,startCoord[curentEx].targetStartY+1, 48,48);
     }   
 
     function gridDrowing(){
