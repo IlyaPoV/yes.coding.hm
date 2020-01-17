@@ -145,7 +145,7 @@
                 return false;
             }
         })
-        allRight = state.howMuch("rep") == state.howMuch("end") == state.howMuch("do")
+        allRight = state.howMuch("rep") == state.howMuch("end") && state.howMuch("rep") == state.howMuch("do");  
         if(allRight){
             let expectNum = ()=>{
                 let check = true;
