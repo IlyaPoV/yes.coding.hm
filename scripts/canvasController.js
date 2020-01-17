@@ -44,9 +44,9 @@
             turtleStartX: 88,
             turtleStartY: 335,
             targetStartX: 185.5,
-            targetStartY: 82.5,
+            targetStartY: 32.5,
             finishAtX: 188,
-            finishAtY: 85,
+            finishAtY: 35,
         },
         {//6
             turtleStartX: 88,
@@ -74,8 +74,8 @@
         }
     ]
 
-    canvas.width =400;
-    canvas.height= 400;
+    canvas.width = 400;
+    canvas.height = 400;
 
     ctx.imageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
@@ -146,19 +146,20 @@
             }
         })
         allRight = state.howMuch("rep") == state.howMuch("end") == state.howMuch("do")
-        let expectNum = ()=>{
-            let check = true;
-            state.forEach((el,i)=>{
-                if(el=="rep"){
-                    if(!Boolean(parseInt(state[i+1]))){
-                        check =false
+        if(allRight){
+            let expectNum = ()=>{
+                let check = true;
+                state.forEach((el,i)=>{
+                    if(el=="rep"){
+                        if(!Boolean(parseInt(state[i+1]))){
+                            check =false
+                        }
                     }
-                }
-            })
-            return check;
+                })
+                return check;
+            }
+            allRight = expectNum()
         }
-
-        allRight = expectNum()
         return allRight;
     }
     
