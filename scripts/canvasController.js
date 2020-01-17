@@ -51,10 +51,10 @@
         {//6
             turtleStartX: 88,
             turtleStartY: 335,
-            targetStartX: 185.5,
-            targetStartY: 82.5,
-            finishAtX: 188,
-            finishAtY: 85,
+            targetStartX: 335.5,
+            targetStartY: 32.5,
+            finishAtX: 338,
+            finishAtY: 35,
         },
         {//7
             turtleStartX: 88,
@@ -186,25 +186,25 @@
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.lineWidth = 7;
         ctx.strokeStyle ="#696969"
-        ctx.strokeRect(30.5, 30.5, 350, 350);
+        ctx.strokeRect(30.5, 30.5, 355, 355);
         ctx.strokeStyle ="#262626"
-        ctx.strokeRect(32.5, 32.5, 346, 346);
-        ctx.drawImage(leaves, 34.5, 34.5, 342, 342);
+        ctx.strokeRect(32.5, 32.5, 351, 351);
+        ctx.drawImage(leaves, 34.5, 34.5, 347, 347);
         gridDrowing();
         ctx.lineWidth = 5;
         ctx.strokeStyle = "#DB7093";
-        ctx.strokeRect(startCoord[curentEx].targetStartX,startCoord[curentEx].targetStartY, 50,50);
+        ctx.strokeRect(startCoord[curentEx].targetStartX,startCoord[curentEx].targetStartY, 48,48);
     }   
 
     function gridDrowing(){
         for(let x=85; x<375; x+=50){
-            ctx.moveTo(x,34.5);
-            ctx.lineTo(x,376.7);
+            ctx.moveTo(x,35);
+            ctx.lineTo(x,381.7);
         }
 
         for(let y=82.5;y<375; y+=50){
-            ctx.moveTo(34.5,y);
-            ctx.lineTo(376.7,y);
+            ctx.moveTo(35,y);
+            ctx.lineTo(381.7,y);
         }
         ctx.lineWidth=3;
         ctx.strokeStyle = "#888";
