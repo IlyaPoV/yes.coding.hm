@@ -219,6 +219,12 @@ img {
 .right {
     background-image:url(../img/right.png);
 }
+.left {
+    background-image:url(../img/left.png);
+}
+.dwn {
+    background-image:url(../img/dwn.png);
+}
 .num1{
     background-image:url(../img/1.png);
 }

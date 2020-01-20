@@ -57,12 +57,12 @@
             finishAtY: 35,
         },
         {//7
-            turtleStartX: 88,
+            turtleStartX: 38,
             turtleStartY: 335,
-            targetStartX: 185.5,
-            targetStartY: 82.5,
-            finishAtX: 188,
-            finishAtY: 85,
+            targetStartX: 335.5,
+            targetStartY: 132.5,
+            finishAtX: 338,
+            finishAtY: 135,
         },
         {//8
             turtleStartX: 88,
@@ -286,12 +286,13 @@
         return result;
     }
 
-
+    let active = false;
 
     // Run app
     clear();
     document.addEventListener('keydown',(e)=>{
-        if(e.keyCode == 13){
+        if(e.keyCode == 13 && !active){
+            active = true;
             let parent = document.querySelector("#parent");
             let resultArr = [];
             let runStack=[];
@@ -322,7 +323,7 @@
                    await elem(); 
                 }
             }
-            run().then(()=>reviewCheck());
+            run().then(()=>reviewCheck()).then(()=>active = false);
             
     }})
 
